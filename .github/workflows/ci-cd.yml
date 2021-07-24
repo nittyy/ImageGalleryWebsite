@@ -1,24 +1,20 @@
 name: aws-deploy
 on: [push]
 jobs: 
-  checkout-repository:
+  deploy-to-aws:
     runs-on: ubuntu-latest
+    environment: echo '${GITHUB_REF#refs/*/}'
     steps:
-      - run: echo "The job is triggered by ${{ github.event_name }} event"
-      - run: echo "Cloning ${{ github.repository }} repository from branch ${{ github.ref }}"
-      - name: Check out repository code
+      - name: Checkout ${{ github.repository }} repository from branch ${{ github.ref }}
         uses: actions/checkout@v2
-      - run: echo "Cloned ${{ github.repository }} repositor
-  echo-branch-name:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set selected color
-        run: echo '::set-output name=SELECTED_COLOR::${GITHUB_REF#refs/*/}'
-        id: random-color-generator
-      - name: Get color
-        run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
-  echo-branch-name-here:
-    runs-on: ubuntu-latest
-    steps:
-      - name: echo branch name from this stage
-        run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
+      - name: Copy src directory via scp to AWS instances
+        uses: horochx/deploy-via-scp@master
+        with:
+          local: src/*
+          remote: /var/www/html/
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          user: ${{ secrets.USER }}
+          key: ${{ secrets.PRIVATE_KEY }}
+      - name: Build ${{ job.status }}
+        run: echo "Build ${{job.status}}!"
