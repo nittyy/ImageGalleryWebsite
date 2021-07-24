@@ -1,0 +1,19 @@
+name: aws-deploy
+on: [push]
+jobs: 
+  checkout-repository:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job is triggered by ${{ github.event_name }} event"
+      - run: echo "Cloning ${{ github.repository }} repository from branch is ${{ github.ref }}"
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "Cloned ${{ github.repository }} repository"
+  echo-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set branch name
+        id: vars
+        run: echo ::set_output name=branch_name::${GITHUB_REF#refs/*/}
+      - name: Echo branch name
+        run: echo ${{ steps.vars.outputs.branch_name }}
