@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "The job is triggered by ${{ github.event_name }} event"
-      - run: echo "Cloning ${{ github.repository }} repository from branch is ${{ github.ref }}"
+      - run: echo "Cloning ${{ github.repository }} repository from branch ${{ github.ref }}"
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: echo "Cloned ${{ github.repository }} repository"
@@ -14,6 +14,6 @@ jobs:
     steps:
       - name: Set branch name
         id: vars
-        run: echo ::set_output name=branch_name::${GITHUB_REF#refs/*/}
+        run: echo ::set_output name=short_ref::${GITHUB_REF#refs/*/}
       - name: Echo branch name
-        run: echo ${{ steps.vars.outputs.branch_name }}
+        run: echo ${{ steps.vars.outputs.short_ref }}
