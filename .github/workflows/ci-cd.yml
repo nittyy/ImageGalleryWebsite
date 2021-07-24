@@ -17,8 +17,8 @@ jobs:
         id: random-color-generator
       - name: Get color
         run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
-      # - name: Set branch name
-      #   id: vars
-      #   run: echo ::set_output name=short_ref::${GITHUB_REF#refs/*/}
-      # - name: Echo branch name
-      #   run: echo ${{ steps.vars.outputs.short_ref }}
+  echo-branch-name-here:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo branch name from this stage
+        run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
