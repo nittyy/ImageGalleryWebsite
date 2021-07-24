@@ -3,7 +3,7 @@ on: [push]
 jobs: 
   deploy-to-aws:
     runs-on: ubuntu-latest
-    environment: develop
+    environment: echo $(echo $GITHUB_REF | cut -d'/' -f 3)
     steps:
       - name: Checkout ${{ github.repository }} repository from branch ${{ github.ref }}
         uses: actions/checkout@v2
