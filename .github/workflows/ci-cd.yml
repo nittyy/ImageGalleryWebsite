@@ -12,8 +12,13 @@ jobs:
   echo-branch-name:
     runs-on: ubuntu-latest
     steps:
-      - name: Set branch name
-        id: vars
-        run: echo ::set_output name=short_ref::${GITHUB_REF#refs/*/}
-      - name: Echo branch name
-        run: echo ${{ steps.vars.outputs.short_ref }}
+      - name: Set selected color
+        run: echo '::set-output name=SELECTED_COLOR::green'
+        id: random-color-generator
+      - name: Get color
+        run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
+      # - name: Set branch name
+      #   id: vars
+      #   run: echo ::set_output name=short_ref::${GITHUB_REF#refs/*/}
+      # - name: Echo branch name
+      #   run: echo ${{ steps.vars.outputs.short_ref }}
