@@ -8,12 +8,12 @@ jobs:
       - run: echo "Cloning ${{ github.repository }} repository from branch ${{ github.ref }}"
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: echo "Cloned ${{ github.repository }} repository"
+      - run: echo "Cloned ${{ github.repository }} repositor
   echo-branch-name:
     runs-on: ubuntu-latest
     steps:
       - name: Set selected color
-        run: echo '::set-output name=SELECTED_COLOR::green'
+        run: echo '::set-output name=SELECTED_COLOR::${GITHUB_REF#refs/*/}'
         id: random-color-generator
       - name: Get color
         run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
