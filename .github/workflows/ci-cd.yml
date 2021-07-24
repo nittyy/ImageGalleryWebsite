@@ -3,7 +3,7 @@ on: [push]
 jobs: 
   deploy-to-aws:
     runs-on: ubuntu-latest
-    environment: echo '${GITHUB_REF#refs/*/}'
+    environment: develop
     steps:
       - name: Checkout ${{ github.repository }} repository from branch ${{ github.ref }}
         uses: actions/checkout@v2
